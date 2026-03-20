@@ -120,7 +120,7 @@ export default function Hero({ onUnlock, isUnlocked }) {
               type="text"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Our anniversary or..."
+              placeholder="Say ILoveYou..."
               className="w-64 md:w-80 px-4 py-3 rounded-full border-2 border-romantic-pink/50 bg-white/80 dark:bg-gray-800/80 backdrop-blur text-center font-poppins focus:outline-none focus:ring-2 focus:ring-romantic-pink focus:border-transparent placeholder:text-gray-400"
               autoFocus
               autoComplete="off"

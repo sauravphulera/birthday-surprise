@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import Hero from './components/Hero'
 import PhotoCarousel from './components/PhotoCarousel'
 import LoveMessages from './components/LoveMessages'
@@ -11,12 +11,28 @@ import { CONFIG } from './config'
 function App() {
   const [isUnlocked, setIsUnlocked] = useState(false)
   const [darkMode, setDarkMode] = useState(false)
+  /** Set by MusicPlayer — call synchronously inside unlock gesture so audio can start */
+  const playMusicNowRef = useRef(null)
 
   const musicSources = (CONFIG.musicSources ?? []).filter(Boolean)
 
+  const handleUnlock = () => {
+    setIsUnlocked(true)
+    // Same synchronous turn as password submit / user gesture → best chance for autoplay (esp. mobile)
+    playMusicNowRef.current?.()
+  }
+
   return (
     <div className={darkMode ? 'dark' : ''}>
-      <Hero onUnlock={() => setIsUnlocked(true)} isUnlocked={isUnlocked} />
+      {/* Mount audio early so it preloads; play starts from handleUnlock on correct password */}
+      <MusicPlayer
+        sources={musicSources}
+        title={CONFIG.musicTitle}
+        playMusicRef={playMusicNowRef}
+        controlsVisible={isUnlocked}
+      />
+
+      <Hero onUnlock={handleUnlock} isUnlocked={isUnlocked} />
 
       {isUnlocked && (
         <>
@@ -27,8 +43,6 @@ function App() {
             <Countdown />
             <FinalSurprise />
           </div>
-
-          <MusicPlayer sources={musicSources} title={CONFIG.musicTitle} />
 
           {/* Dark/Light toggle — top-left so it doesn’t crowd the music FAB */}
           <button
