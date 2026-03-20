@@ -1,26 +1,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { CONFIG } from '../config'
-
-const FloatingHeart = ({ delay, x, size }) => (
-  <motion.div
-    className="absolute text-romantic-pink opacity-40"
-    style={{ left: `${x}%`, top: `${20 + Math.random() * 60}%`, fontSize: size }}
-    initial={{ y: 100, opacity: 0 }}
-    animate={{
-      y: [-20, 20, -20],
-      opacity: [0.2, 0.5, 0.2],
-      rotate: [0, 10, -10, 0],
-    }}
-    transition={{
-      duration: 4 + Math.random() * 2,
-      repeat: Infinity,
-      delay,
-    }}
-  >
-    💕
-  </motion.div>
-)
+import BirthdayCakeIntro from './BirthdayCakeIntro'
 
 export default function Hero({ onUnlock, isUnlocked }) {
   const [password, setPassword] = useState('')
@@ -44,29 +25,18 @@ export default function Hero({ onUnlock, isUnlocked }) {
 
   return (
     <section className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden bg-gradient-to-br from-romantic-pink/20 via-romantic-mint/10 to-romantic-gold/20 dark:from-romantic-pink/30 dark:via-purple-900/20 dark:to-romantic-gold/20">
-      {/* Floating hearts background */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {[...Array(15)].map((_, i) => (
-          <FloatingHeart
-            key={i}
-            delay={i * 0.3}
-            x={Math.random() * 100}
-            size={16 + Math.random() * 24}
-          />
-        ))}
-      </div>
-
       <AnimatePresence mode="wait">
         {!showInput ? (
           <motion.div
             key="welcome"
-            className="text-center px-6 z-10 cursor-pointer"
+            className="flex flex-col items-center text-center px-6 z-10 w-full max-w-lg cursor-pointer"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
             transition={{ duration: 0.5 }}
             onClick={() => setShowInput(true)}
           >
+            <BirthdayCakeIntro visible={!showInput} className="mb-1 shrink-0" />
             <motion.h1
               className="font-dancing text-4xl md:text-6xl lg:text-7xl text-romantic-pink mb-4"
               initial={{ opacity: 0, y: 20 }}

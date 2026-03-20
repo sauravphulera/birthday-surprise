@@ -28,6 +28,11 @@ export const CONFIG = {
   birthdayDate: `2026-03-21`, // e.g. 2026-03-20
   birthdayTime: '00:00', // Midnight
 
+  /** Welcome cake: one candle per digit (e.g. 27 → candles “2” and “7”). Override with `cakeCandleDigits`. */
+  cakeCandleAge: 27,
+  /** Optional: explicit digits, e.g. ['2', '7'] — if set, ignores `cakeCandleAge` for candles only */
+  cakeCandleDigits: null,
+
   // Photo timeline — files live in public/photos/ (deployed with the site)
   // Tip: HEIC files in that folder won’t show in most browsers; convert to JPG if needed.
   photos: [

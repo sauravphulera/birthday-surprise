@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Manual theme toggle: `dark:` utilities follow `.dark` on an ancestor (not only system preference). */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --color-romantic-pink: #FF6B9D;
   --color-romantic-gold: #FFD93D;
@@ -29,8 +32,8 @@ body {
   font-family: Poppins, sans-serif;
 }
 
-/* Candlelight / dark mode romantic feel */
-.dark body {
+/* Candlelight / dark mode romantic feel (body is not a descendant of #root, so use html.dark) */
+html.dark body {
   background: linear-gradient(180deg, #1a0a0f 0%, #2d1b2e 50%, #1a0a0f 100%);
 }
 
